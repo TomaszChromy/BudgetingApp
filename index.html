@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgeting App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Budgeting App</h1>
+        <div class="budget-form">
+            <input type="text" id="description" placeholder="Description">
+            <input type="number" id="amount" placeholder="Amount">
+            <select id="transaction-type">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <button id="add-btn">Add</button>
+        </div>
+        <div class="budget-summary">
+            <h2>Summary</h2>
+            <ul id="transaction-list"></ul>
+            <p>Total Income: <span id="total-income">0</span> PLN</p>
+            <p>Total Expenses: <span id="total-expenses">0</span> PLN</p>
+            <p>Net Balance: <span id="net-balance">0</span> PLN</p>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
