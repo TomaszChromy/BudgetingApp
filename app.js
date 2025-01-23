@@ -1,4 +1,3 @@
-const jsContent = `
 let transactions = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,21 +15,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-   const addTransaction = () => {
-    const description = descriptionInput.value.trim();
-    const amount = parseFloat(amountInput.value);
-    const type = transactionTypeSelect.value;
+    const addTransaction = () => {
+        const description = descriptionInput.value.trim();
+        const amount = parseFloat(amountInput.value);
+        const type = transactionTypeSelect.value;
 
-    if (description === '' || isNaN(amount) || amount <= 0 || (type !== 'income' && type !== 'expense')) {
-        alert('Proszę wprowadzić poprawny opis, dodatnią kwotę oraz wybrać typ transakcji.');
-        return;
-    }
+        if (!validateTransaction(description, amount, type)) {
+            alert('Proszę wprowadzić poprawny opis, dodatnią kwotę oraz wybrać typ transakcji.');
+            return;
+        }
 
-    transactions.push({ description, amount, type });
-    descriptionInput.value = '';
-    amountInput.value = '';
-    updateUI();
-};
+        const transaction = { id: generateId(), description, amount, type };
+        transactions.push(transaction);
+        descriptionInput.value = '';
+        amountInput.value = '';
+        updateUI();
+    };
+
+    const validateTransaction = (description, amount, type) => {
+        return (
+            description !== '' &&
+            !isNaN(amount) &&
+            amount > 0 &&
+            (type === 'income' || type === 'expense')
+        );
+    };
 
     const updateUI = () => {
         transactionList.innerHTML = '';
@@ -38,24 +47,27 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalExpenses = 0;
 
         transactions.forEach((transaction) => {
-            const li = document.createElement('li');
-            li.textContent = `${transaction.description}: ${transaction.amount.toFixed(2)} PLN (${transaction.type})`;
-            transactionList.appendChild(li);
-
-            if (transaction.type === 'income') {
-                totalIncome += transaction.amount;
-            } else if (transaction.type === 'expense') {
-                totalExpenses += transaction.amount;
-            }
+            totalIncome += transaction.type === 'income' ? transaction.amount : 0;
+            totalExpenses += transaction.type === 'expense' ? transaction.amount : 0;
+            appendTransactionToList(transaction);
         });
 
-        totalIncomeElement.textContent = totalIncome.toFixed(2);
-        totalExpensesElement.textContent = totalExpenses.toFixed(2);
-        netBalanceElement.textContent = (totalIncome - totalExpenses).toFixed(2);
+        totalIncomeElement.textContent = formatCurrency(totalIncome);
+        totalExpensesElement.textContent = formatCurrency(totalExpenses);
+        netBalanceElement.textContent = formatCurrency(totalIncome - totalExpenses);
     };
+
+    const appendTransactionToList = (transaction) => {
+        const li = document.createElement('li');
+        li.textContent = `${transaction.description}: ${formatCurrency(transaction.amount)} PLN (${transaction.type})`;
+        transactionList.appendChild(li);
+    };
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(value);
+    };
+
+    const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
 
     addButton.addEventListener('click', addTransaction);
 });
-`;
-
-module.exports = { htmlContent, cssContent, jsContent };
