@@ -1,4 +1,4 @@
-﻿const CACHE = 'budgetingapp-v3';
+const CACHE = 'budgetingapp-v3';
 const ASSETS = [
   './','./index.html','./manifest.webmanifest',
   './assets/icon-192.png','./assets/icon-512.png',
