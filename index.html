@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BudgetingApp – Prosty budżet domowy</title>
+  
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+<title>BudgetingApp – Prosty budżet domowy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -84,6 +87,8 @@
 
         <span style="width:12px;display:inline-block"></span>
         <button id="exportBtn" class="btn btn-outline" title="Eksport do JSON">Eksport</button>
+        <button id="exportCsvBtn" class="btn btn-outline" title="Eksport do CSV">CSV</button>
+        <button id="printBtn" class="btn btn-outline" title="Drukuj raport">Drukuj</button>
         <label class="btn btn-outline" for="importFile" title="Import JSON">Import JSON</label>
         <input id="importFile" type="file" accept="application/json" class="sr-only" style="position:absolute;left:-9999px">
         <button id="resetBtn" class="btn btn-danger" title="Usuń wszystkie dane">Wyczyść</button>
@@ -317,6 +322,8 @@
     addWalletBtn: document.getElementById('addWalletBtn'),
     delWalletBtn: document.getElementById('delWalletBtn'),
     currencySelect: document.getElementById('currencySelect'),
+    exportCsvBtn: document.getElementById('exportCsvBtn'),
+    printBtn: document.getElementById('printBtn'),
   };
 
   // ======= Category datalist =======
