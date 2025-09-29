@@ -458,7 +458,33 @@
     a.download = 'budgetingapp-export.json'; a.click(); URL.revokeObjectURL(a.href);
   });
 
-  el.importFile.addEventListener('change', (e) => {
+   el.exportCsvBtn.addEventListener('click', () => {
+    const wid = state.activeWalletId;
+    const walletTx = state.tx.filter(t => t.walletId === wid);
+    const rows = [
+      ['data','typ','kategoria','opis','kwota','portfel','waluta'],
+      ...walletTx.map(t => {
+        const w = state.wallets.find(w=>w.id===t.walletId);
+        return [
+          t.date||'',
+          t.type==='income'?'przychód':'wydatek',
+          t.category||'',
+          String(t.note||'').replace(/\n/g,' '),
+          String(t.amount ?? 0).replace('.', ','),
+          w?.name||'',
+          w?.currency||''
+        ];
+      })
+    ];
+    const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g,'""') + '"').join(';')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'budgetingapp-' + (state.wallets.find(w=>w.id===wid)?.name||'portfel') + '.csv';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  el.printBtn.addEventListener('click', () => window.print());
+ el.importFile.addEventListener('change', (e) => {
     const file = e.target.files?.[0]; if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
