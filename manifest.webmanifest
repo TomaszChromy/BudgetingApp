@@ -1,0 +1,21 @@
+﻿{
+    "display":  "standalone",
+    "icons":  [
+                  {
+                      "type":  "image/png",
+                      "sizes":  "192x192",
+                      "src":  "assets/icon-192.png"
+                  },
+                  {
+                      "type":  "image/png",
+                      "sizes":  "512x512",
+                      "src":  "assets/icon-512.png"
+                  }
+              ],
+    "background_color":  "#0f172a",
+    "theme_color":  "#0f172a",
+    "name":  "BudgetingApp",
+    "start_url":  "./",
+    "scope":  "./",
+    "short_name":  "BudgetingApp"
+}
